@@ -9,6 +9,20 @@ bot.start(async (ctx) => {
 });
 
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
+bot.hears('/count', (ctx) => {
+    ctx.reply('Enter your hand.');
+});
+bot.hears('/number', (ctx) => {
+    ctx.reply('Enter a limit');
+    bot.on(message, (ctx) => {
+        const limit = Number(ctx.message.text);
+        if (limit) {
+            ctx.reply(Math.floor(Math.random() * limit));
+        } else {
+            ctx.reply('This is an unlucky limit');
+        }
+    });
+});
 
 bot.launch();
 
