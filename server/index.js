@@ -15,6 +15,17 @@ bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
 // });
 bot.command('count', (ctx) => {
     ctx.reply('Enter your hand.', buttons);
+    const hand = [];
+    for (let i = 1; i < 35; i++) {
+        bot.action(String(i), (ctx) => {
+            console.log(ctx.callbackQuery.data);
+            hand.push(ctx.callbackQuery.data);
+            ctx.reply(hand.join(';'));
+            const text = "\ud83c\udc21";
+            ctx.reply(`${text}`);
+        });
+    }
+
 });
 bot.hears('/number', (ctx) => {
     ctx.reply('Enter a limit');
