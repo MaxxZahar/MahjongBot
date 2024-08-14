@@ -25,4 +25,22 @@ const buttons = Markup.inlineKeyboard([
     ]
 ]);
 
-module.exports = buttons;
+const handTypeButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('Closed', 'closed'), Markup.button.callback('Open', 'open')],
+]);
+
+const formTypeButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('Standard', 'standard'), Markup.button.callback('Seven Pairs', 'chitoi'),
+    Markup.button.callback('Pinfu', 'pinfu'), Markup.button.callback('Thirteen Orphans', 'kokushi')
+    ],
+]);
+
+const winTypeButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('Ron', 'ron'), Markup.button.callback('Tsumo', 'tsumo')],
+]);
+
+const countButton = Markup.inlineKeyboard([
+    Markup.button.callback('Count', 'count')
+]);
+
+module.exports = { buttons, handTypeButtons, formTypeButtons, winTypeButtons, countButton };
