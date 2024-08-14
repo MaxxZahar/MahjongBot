@@ -1,4 +1,6 @@
 const BONUSES = require('./consts').BONUSES;
+const DEALER_TABLE = require('./consts').DEALER_TABLE;
+const NOT_DEALER_TABLE = require('./consts').NOT_DEALER_TABLE;
 
 function countMiniPoints(options) {
     if (options.form === 'chitoi') return 25;
@@ -16,4 +18,36 @@ function countMiniPoints(options) {
     return 'Wrong choice!';
 }
 
-module.exports = { countMiniPoints };
+function checkOptions(options) {
+    const properties = ['dealer', 'open', 'form', 'win', 'han'];
+    for (const property of properties) {
+        if (!options.hasOwnProperty(property)) return false;
+    }
+    return true;
+}
+
+function getScore(options) {
+    if (!checkOptions(options)) return 'Wrong choice!';
+    const table = options.dealer ? DEALER_TABLE : NOT_DEALER_TABLE;
+    const fu = countMiniPoints(options);
+    if (options.han >= 13) {
+        return table['yakuman'][options.win];
+    }
+    else if (options.han >= 11) {
+        return table['sanbaiman'][options.win];
+    }
+    else if (options.han >= 8) {
+        return table['baiman'][options.win];
+    }
+    else if (options.han >= 6) {
+        return table['haneman'][options.win];
+    }
+    else if (options.han >= 5 || (options.han === 4 && fu > 30) || (options.han === 3 && fu > 60)) {
+        return table['mangan'][options.win];
+    }
+    else {
+        return table[`${options.han}+${fu}`][options.win];
+    }
+}
+
+module.exports = { countMiniPoints, getScore };

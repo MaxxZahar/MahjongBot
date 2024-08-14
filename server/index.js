@@ -33,12 +33,20 @@ bot.telegram.setMyCommands([
 
 bot.command('count', async (ctx) => {
     let options = { bonuses: [] };
+    await ctx.reply('Choose position', buttons.positionButtons);
     await ctx.reply('Choose hand type', buttons.handTypeButtons);
     await ctx.reply('Choose hand form', buttons.formTypeButtons);
     await ctx.reply('Choose win type', buttons.winTypeButtons);
     await ctx.reply('Bonus points', buttons.bonusMiniPointsButtons);
+    await ctx.reply('Enter number of han', buttons.hanButtons);
     await ctx.reply('Get result', buttons.countButton);
     await ctx.reply('Clear Current Options', buttons.clearButton);
+    bot.action('dealer', (ctx) => {
+        options['dealer'] = true;
+    });
+    bot.action('not', (ctx) => {
+        options['dealer'] = false;
+    });
     bot.action('closed', (ctx) => {
         options['open'] = false;
     });
@@ -90,16 +98,45 @@ bot.command('count', async (ctx) => {
     bot.action('otw', (ctx) => {
         options.bonuses.push('One Tile Wait');
     });
+    bot.action('h1', (ctx) => {
+        options['han'] = 1;
+    });
+    bot.action('h2', (ctx) => {
+        options['han'] = 2;
+    });
+    bot.action('h3', (ctx) => {
+        options['han'] = 3;
+    });
+    bot.action('h4', (ctx) => {
+        options['han'] = 4;
+    });
+    bot.action('h5', (ctx) => {
+        options['han'] = 5;
+    });
+    bot.action('h6', (ctx) => {
+        options['han'] = 6;
+    });
+    bot.action('h8', (ctx) => {
+        options['han'] = 8;
+    });
+    bot.action('h11', (ctx) => {
+        options['han'] = 11;
+    });
+    bot.action('h13', (ctx) => {
+        options['han'] = 13;
+    });
     bot.action('count', async (ctx) => {
         console.log(options);
         console.log(funcs.countMiniPoints(options));
-        ctx.reply(funcs.countMiniPoints(options));
+        const score = funcs.getScore(options);
+        await ctx.reply(`Score: ${score}`);
+        if (score !== 'Wrong choice!') await ctx.reply("Don't forget about renchans");
     });
     bot.action('currentchoice', async (ctx) => {
-        ctx.reply(JSON.stringify(options));
+        await ctx.reply(JSON.stringify(options));
     });
     bot.action('clear', async (ctx) => {
-        ctx.reply('Cleared');
+        await ctx.reply('Cleared');
         options = { bonuses: [] };
     });
     // let hand = [];

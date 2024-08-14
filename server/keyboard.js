@@ -55,4 +55,13 @@ const bonusMiniPointsButtons = Markup.inlineKeyboard([
     [Markup.button.callback('Pair of Honors', 'pairh'), Markup.button.callback('One Tile Wait', 'otw')]
 ]);
 
-module.exports = { buttons, handTypeButtons, formTypeButtons, winTypeButtons, countButton, bonusMiniPointsButtons, clearButton };
+const positionButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('Dealer', 'dealer'), Markup.button.callback('Not', 'not')]
+]);
+
+const hanButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('1', 'h1'), Markup.button.callback('2', 'h2'), Markup.button.callback('3', 'h3'), Markup.button.callback('4', 'h4'), Markup.button.callback('5', 'h5')],
+    [Markup.button.callback('6-7', 'h6'), Markup.button.callback('8-10', 'h8'), Markup.button.callback('11-12', 'h11'), Markup.button.callback('13+', 'h13')]
+]);
+
+module.exports = { buttons, handTypeButtons, formTypeButtons, winTypeButtons, countButton, bonusMiniPointsButtons, clearButton, positionButtons, hanButtons };
