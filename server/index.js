@@ -15,6 +15,22 @@ bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
 // bot.hears('/count', (ctx) => {
 //     ctx.reply('Enter your hand.');
 // });
+
+bot.telegram.setMyCommands([
+    {
+        command: 'start',
+        description: 'Display welcome message'
+    },
+    {
+        command: 'count',
+        description: 'Lets count your points!'
+    },
+    {
+        command: 'number',
+        description: 'Generate random number'
+    },
+]);
+
 bot.command('count', (ctx) => {
     let options = { bonuses: [] };
     ctx.reply('Choose hand type', buttons.handTypeButtons);
