@@ -33,6 +33,19 @@ const TILES_DICTIONARY = {
     '17': "\ud83c\udc1f",
     '18': "\ud83c\udc20",
     '19': "\ud83c\udc21",
-}
+};
 
-module.exports = { TILES_DICTIONARY };
+const BONUSES = {
+    'Open Pon': 2,
+    'Closed Pon': 4,
+    'Open Pon TWD': 4,
+    'Closed Pon TWD': 8,
+    'Open Kan': 8,
+    'Closed Kan': 16,
+    'Open Kan TWD': 16,
+    'Closed Kan TWD': 32,
+    'Pair of Honors': 2,
+    'One Tile Wait': 2
+};
+
+module.exports = { TILES_DICTIONARY, BONUSES };

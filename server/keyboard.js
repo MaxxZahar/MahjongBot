@@ -40,7 +40,19 @@ const winTypeButtons = Markup.inlineKeyboard([
 ]);
 
 const countButton = Markup.inlineKeyboard([
-    Markup.button.callback('Count', 'count')
+    [Markup.button.callback('Count', 'count'), Markup.button.callback('Current Choice', 'currentchoice')]
 ]);
 
-module.exports = { buttons, handTypeButtons, formTypeButtons, winTypeButtons, countButton };
+const clearButton = Markup.inlineKeyboard([
+    Markup.button.callback('Clear', 'clear')
+]);
+
+const bonusMiniPointsButtons = Markup.inlineKeyboard([
+    [Markup.button.callback('Open Pon', 'opon'), Markup.button.callback('Closed Pon', 'cpon')],
+    [Markup.button.callback('Open Pon TWD', 'opontwd'), Markup.button.callback('Closed Pon TWD', 'cpontwd')],
+    [Markup.button.callback('Open Kan', 'okan'), Markup.button.callback('Closed Kan', 'ckan')],
+    [Markup.button.callback('Open Kan TWD', 'okantwd'), Markup.button.callback('Closed Kan TWD', 'ckantwd')],
+    [Markup.button.callback('Pair of Honors', 'pairh'), Markup.button.callback('One Tile Wait', 'otw')]
+]);
+
+module.exports = { buttons, handTypeButtons, formTypeButtons, winTypeButtons, countButton, bonusMiniPointsButtons, clearButton };

@@ -16,11 +16,13 @@ bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
 //     ctx.reply('Enter your hand.');
 // });
 bot.command('count', (ctx) => {
-    const options = {};
+    let options = { bonuses: [] };
     ctx.reply('Choose hand type', buttons.handTypeButtons);
     ctx.reply('Choose hand form', buttons.formTypeButtons);
     ctx.reply('Choose win type', buttons.winTypeButtons);
+    ctx.reply('Bonus points', buttons.bonusMiniPointsButtons);
     ctx.reply('Get result', buttons.countButton);
+    ctx.reply('Clear Current Options', buttons.clearButton);
     bot.action('closed', (ctx) => {
         options['open'] = false;
     });
@@ -42,9 +44,47 @@ bot.command('count', (ctx) => {
     bot.action('tsumo', (ctx) => {
         options['win'] = 'tsumo';
     });
+    bot.action('opon', (ctx) => {
+        options.bonuses.push('Open Pon');
+    });
+    bot.action('cpon', (ctx) => {
+        options.bonuses.push('Closed Pon');
+    });
+    bot.action('opontwd', (ctx) => {
+        options.bonuses.push('Open Pon TWD');
+    });
+    bot.action('cpontwd', (ctx) => {
+        options.bonuses.push('Closed Pon TWD');
+    });
+    bot.action('okan', (ctx) => {
+        options.bonuses.push('Open Kan');
+    });
+    bot.action('ckan', (ctx) => {
+        options.bonuses.push('Closed Kan');
+    });
+    bot.action('okantwd', (ctx) => {
+        options.bonuses.push('Open Kan TWD');
+    });
+    bot.action('ckantwd', (ctx) => {
+        options.bonuses.push('Closed Kan TWD');
+    });
+    bot.action('pairh', (ctx) => {
+        options.bonuses.push('Pair of Honors');
+    });
+    bot.action('otw', (ctx) => {
+        options.bonuses.push('One Tile Wait');
+    });
     bot.action('count', (ctx) => {
         console.log(options);
         console.log(funcs.countMiniPoints(options));
+        ctx.reply(funcs.countMiniPoints(options));
+    });
+    bot.action('currentchoice', (ctx) => {
+        ctx.reply(JSON.stringify(options));
+    });
+    bot.action('clear', (ctx) => {
+        ctx.reply('Cleared');
+        options = { bonuses: [] };
     });
     // let hand = [];
     // for (let i = 1; i < 35; i++) {
