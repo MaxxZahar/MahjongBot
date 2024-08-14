@@ -31,14 +31,14 @@ bot.telegram.setMyCommands([
     },
 ]);
 
-bot.command('count', (ctx) => {
+bot.command('count', async (ctx) => {
     let options = { bonuses: [] };
-    ctx.reply('Choose hand type', buttons.handTypeButtons);
-    ctx.reply('Choose hand form', buttons.formTypeButtons);
-    ctx.reply('Choose win type', buttons.winTypeButtons);
-    ctx.reply('Bonus points', buttons.bonusMiniPointsButtons);
-    ctx.reply('Get result', buttons.countButton);
-    ctx.reply('Clear Current Options', buttons.clearButton);
+    await ctx.reply('Choose hand type', buttons.handTypeButtons);
+    await ctx.reply('Choose hand form', buttons.formTypeButtons);
+    await ctx.reply('Choose win type', buttons.winTypeButtons);
+    await ctx.reply('Bonus points', buttons.bonusMiniPointsButtons);
+    await ctx.reply('Get result', buttons.countButton);
+    await ctx.reply('Clear Current Options', buttons.clearButton);
     bot.action('closed', (ctx) => {
         options['open'] = false;
     });
@@ -90,15 +90,15 @@ bot.command('count', (ctx) => {
     bot.action('otw', (ctx) => {
         options.bonuses.push('One Tile Wait');
     });
-    bot.action('count', (ctx) => {
+    bot.action('count', async (ctx) => {
         console.log(options);
         console.log(funcs.countMiniPoints(options));
         ctx.reply(funcs.countMiniPoints(options));
     });
-    bot.action('currentchoice', (ctx) => {
+    bot.action('currentchoice', async (ctx) => {
         ctx.reply(JSON.stringify(options));
     });
-    bot.action('clear', (ctx) => {
+    bot.action('clear', async (ctx) => {
         ctx.reply('Cleared');
         options = { bonuses: [] };
     });
@@ -119,9 +119,9 @@ bot.command('count', (ctx) => {
     // }
 
 });
-bot.hears('/number', (ctx) => {
+bot.hears('/number', async (ctx) => {
     ctx.reply('Enter a limit');
-    bot.on(message, (ctx) => {
+    bot.on(message, async (ctx) => {
         const limit = Number(ctx.message.text);
         if (limit) {
             ctx.reply(Math.floor(Math.random() * limit));
