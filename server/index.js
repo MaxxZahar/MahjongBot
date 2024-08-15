@@ -7,19 +7,25 @@ const funcs = require('./funcs');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+const data = [];
+
 bot.start(async (ctx) => {
+    console.log(data);
     ctx.reply(`Hi! I'll count your riichi mahjong winning points!`);
+    const filtered = data.filter((record) => record.id === ctx.chat.id);
+    if (filtered.length) {
+        filtered[0] = { id: ctx.chat.id, bonuses: [] }
+    } else {
+        data.push({ id: ctx.chat.id, bonuses: [] });
+    }
 });
 
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
-// bot.hears('/count', (ctx) => {
-//     ctx.reply('Enter your hand.');
-// });
 
 bot.telegram.setMyCommands([
     {
         command: 'start',
-        description: 'Display welcome message'
+        description: 'Display welcome message and initialising'
     },
     {
         command: 'count',
@@ -32,7 +38,6 @@ bot.telegram.setMyCommands([
 ]);
 
 bot.command('count', async (ctx) => {
-    let options = { bonuses: [] };
     await ctx.reply('Choose position', buttons.positionButtons);
     await ctx.reply('Choose hand type', buttons.handTypeButtons);
     await ctx.reply('Choose hand form', buttons.formTypeButtons);
@@ -41,103 +46,261 @@ bot.command('count', async (ctx) => {
     await ctx.reply('Enter number of han', buttons.hanButtons);
     await ctx.reply('Get result', buttons.countButton);
     await ctx.reply('Clear Current Options', buttons.clearButton);
-    bot.action('dealer', (ctx) => {
-        options['dealer'] = true;
+    bot.action('dealer', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['dealer'] = true;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('not', (ctx) => {
-        options['dealer'] = false;
+    bot.action('not', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['dealer'] = false;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('closed', (ctx) => {
-        options['open'] = false;
+    bot.action('closed', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['open'] = false;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('open', (ctx) => {
-        options['open'] = true;
+    bot.action('open', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['open'] = true;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('standard', (ctx) => {
-        options['form'] = 'standard';
+    bot.action('standard', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['form'] = 'standard';
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('pinfu', (ctx) => {
-        options['form'] = 'pinfu';
+    bot.action('pinfu', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['form'] = 'pinfu';
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('chitoi', (ctx) => {
-        options['form'] = 'chitoi';
+    bot.action('chitoi', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['form'] = 'chitoi';
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('ron', (ctx) => {
-        options['win'] = 'ron';
+    bot.action('ron', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['win'] = 'ron';
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('tsumo', (ctx) => {
-        options['win'] = 'tsumo';
+    bot.action('tsumo', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['win'] = 'tsumo';
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('opon', (ctx) => {
-        options.bonuses.push('Open Pon');
+    bot.action('opon', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Open Pon');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('cpon', (ctx) => {
-        options.bonuses.push('Closed Pon');
+    bot.action('cpon', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Closed Pon');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('opontwd', (ctx) => {
-        options.bonuses.push('Open Pon TWD');
+    bot.action('opontwd', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Open Pon TWD');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('cpontwd', (ctx) => {
-        options.bonuses.push('Closed Pon TWD');
+    bot.action('cpontwd', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Closed Pon TWD');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('okan', (ctx) => {
-        options.bonuses.push('Open Kan');
+    bot.action('okan', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Open Kan');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('ckan', (ctx) => {
-        options.bonuses.push('Closed Kan');
+    bot.action('ckan', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Closed Kan');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('okantwd', (ctx) => {
-        options.bonuses.push('Open Kan TWD');
+    bot.action('okantwd', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Open Kan TWD');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('ckantwd', (ctx) => {
-        options.bonuses.push('Closed Kan TWD');
+    bot.action('ckantwd', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Closed Kan TWD');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('pairh', (ctx) => {
-        options.bonuses.push('Pair of Honors');
+    bot.action('pairh', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('Pair of Honors');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('otw', (ctx) => {
-        options.bonuses.push('One Tile Wait');
+    bot.action('otw', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push('One Tile Wait');
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h1', (ctx) => {
-        options['han'] = 1;
+    bot.action('h1', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 1;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h2', (ctx) => {
-        options['han'] = 2;
+    bot.action('h2', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 2;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h3', (ctx) => {
-        options['han'] = 3;
+    bot.action('h3', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 3;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h4', (ctx) => {
-        options['han'] = 4;
+    bot.action('h4', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 4;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h5', (ctx) => {
-        options['han'] = 5;
+    bot.action('h5', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 5;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h6', (ctx) => {
-        options['han'] = 6;
+    bot.action('h6', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 6;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h8', (ctx) => {
-        options['han'] = 8;
+    bot.action('h8', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 8;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h11', (ctx) => {
-        options['han'] = 11;
+    bot.action('h11', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 11;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
-    bot.action('h13', (ctx) => {
-        options['han'] = 13;
+    bot.action('h13', async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options['han'] = 13;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
     bot.action('count', async (ctx) => {
-        console.log(options);
-        console.log(funcs.countMiniPoints(options));
-        const score = funcs.getScore(options);
-        await ctx.reply(`Score: ${score}`);
-        if (score !== 'Wrong choice!') await ctx.reply("Don't forget about renchans");
+        try {
+            let options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            console.log(options);
+            console.log(funcs.countMiniPoints(options));
+            const score = funcs.getScore(options);
+            await ctx.reply(`Score: ${score}`);
+            if (score !== 'Wrong choice!') {
+                await ctx.reply("Don't forget renchans");
+                funcs.cleaning(options);
+            }
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
     bot.action('currentchoice', async (ctx) => {
-        await ctx.reply(JSON.stringify(options));
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            await ctx.reply(JSON.stringify(options));
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
     bot.action('clear', async (ctx) => {
-        await ctx.reply('Cleared');
-        options = { bonuses: [] };
+        try {
+            let options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            await ctx.reply('Cleared');
+            funcs.cleaning(options);
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
     });
     // let hand = [];
     // for (let i = 1; i < 35; i++) {

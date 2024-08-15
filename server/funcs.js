@@ -50,4 +50,13 @@ function getScore(options) {
     }
 }
 
-module.exports = { countMiniPoints, getScore };
+function cleaning(options) {
+    options['bonuses'] = [];
+    delete options.dealer;
+    delete options.open;
+    delete options.form;
+    delete options.win;
+    delete options.han;
+}
+
+module.exports = { countMiniPoints, getScore, cleaning };
