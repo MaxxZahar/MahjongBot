@@ -54,8 +54,6 @@ function countActions(bot, data) {
     bot.action('count', async (ctx) => {
         try {
             let options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            console.log(options);
-            console.log(funcs.countMiniPoints(options));
             const score = funcs.getScore(options);
             await ctx.reply(`Score: ${score}`);
             if (score !== 'Wrong choice!') {

@@ -1,40 +1,3 @@
-const TILES_DICTIONARY = {
-    '31': "\ud83c\udc00",
-    '32': "\ud83c\udc01",
-    '33': "\ud83c\udc02",
-    '34': "\ud83c\udc03",
-    '30': "\ud83c\udc04",
-    '20': "\ud83c\udc05",
-    '10': "\ud83c\udc06",
-    '1': "\ud83c\udc07",
-    '2': "\ud83c\udc08",
-    '3': "\ud83c\udc09",
-    '4': "\ud83c\udc0a",
-    '5': "\ud83c\udc0b",
-    '6': "\ud83c\udc0c",
-    '7': "\ud83c\udc0d",
-    '8': "\ud83c\udc0e",
-    '9': "\ud83c\udc0f",
-    '21': "\ud83c\udc10",
-    '22': "\ud83c\udc11",
-    '23': "\ud83c\udc12",
-    '24': "\ud83c\udc13",
-    '25': "\ud83c\udc14",
-    '26': "\ud83c\udc15",
-    '27': "\ud83c\udc16",
-    '28': "\ud83c\udc17",
-    '29': "\ud83c\udc18",
-    '11': "\ud83c\udc19",
-    '12': "\ud83c\udc1a",
-    '13': "\ud83c\udc1b",
-    '14': "\ud83c\udc1c",
-    '15': "\ud83c\udc1d",
-    '16': "\ud83c\udc1e",
-    '17': "\ud83c\udc1f",
-    '18': "\ud83c\udc20",
-    '19': "\ud83c\udc21",
-};
-
 const BONUSES = {
     'Open Pon': 2,
     'Closed Pon': 4,
@@ -123,4 +86,4 @@ const NOT_DEALER_TABLE = {
 };
 
 
-module.exports = { TILES_DICTIONARY, BONUSES, DEALER_TABLE, NOT_DEALER_TABLE };
+module.exports = { BONUSES, DEALER_TABLE, NOT_DEALER_TABLE };

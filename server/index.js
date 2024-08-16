@@ -2,7 +2,6 @@ const { Telegraf } = require('telegraf');
 const { message } = require('telegraf/filters');
 require('dotenv').config();
 const buttons = require('./keyboard');
-const TILES_DICTIONARY = require('./consts').TILES_DICTIONARY;
 const actions = require('./actions');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -10,7 +9,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const data = [];
 
 bot.start(async (ctx) => {
-    console.log(data);
     ctx.reply(`Hi! I'll count your riichi mahjong winning points!`);
     const filtered = data.filter((record) => record.id === ctx.chat.id);
     if (filtered.length) {
@@ -47,24 +45,9 @@ bot.command('count', async (ctx) => {
     await ctx.reply('Get result', buttons.countButton);
     await ctx.reply('Clear Current Options', buttons.clearButton);
     actions.countActions(bot, data);
-    // let hand = [];
-    // for (let i = 1; i < 35; i++) {
-    //     bot.action(String(i), (ctx) => {
-    //         console.log(ctx.callbackQuery.data);
-    //         hand.push(ctx.callbackQuery.data);
-    //         if (hand.length === 14) {
-    //             let result = '';
-    //             for (const tile of hand) {
-    //                 result += TILES_DICTIONARY[tile];
-    //             }
-    //             ctx.reply(result);
-    //             hand = [];
-    //         }
-    //     });
-    // }
-
 });
-bot.hears('/number', async (ctx) => {
+
+bot.command('number', async (ctx) => {
     ctx.reply('Enter a limit');
     bot.on(message, async (ctx) => {
         const limit = Number(ctx.message.text);
