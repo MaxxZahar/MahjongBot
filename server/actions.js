@@ -1,230 +1,56 @@
 const funcs = require('./funcs');
 
+function simpleDataModificationAction(bot, data, callback, option, value) {
+    bot.action(callback, async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options[option] = value;
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
+    });
+}
+
+function bonusAdditionAction(bot, data, callback, value) {
+    bot.action(callback, async (ctx) => {
+        try {
+            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
+            options.bonuses.push(value);
+        } catch (error) {
+            await ctx.reply("Please, start the bot first");
+        }
+    });
+}
+
 function countActions(bot, data) {
-    bot.action('dealer', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['dealer'] = true;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('not', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['dealer'] = false;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('closed', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['open'] = false;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('open', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['open'] = true;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('standard', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['form'] = 'standard';
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('pinfu', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['form'] = 'pinfu';
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('chitoi', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['form'] = 'chitoi';
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('ron', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['win'] = 'ron';
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('tsumo', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['win'] = 'tsumo';
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('opon', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Open Pon');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('cpon', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Closed Pon');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('opontwd', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Open Pon TWD');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('cpontwd', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Closed Pon TWD');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('okan', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Open Kan');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('ckan', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Closed Kan');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('okantwd', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Open Kan TWD');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('ckantwd', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Closed Kan TWD');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('pairh', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('Pair of Honors');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('otw', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options.bonuses.push('One Tile Wait');
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h1', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 1;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h2', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 2;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h3', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 3;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h4', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 4;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h5', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 5;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h6', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 6;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h8', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 8;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h11', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 11;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
-    bot.action('h13', async (ctx) => {
-        try {
-            const options = await data.filter((record) => record.id === ctx.chat.id)[0];
-            options['han'] = 13;
-        } catch (error) {
-            await ctx.reply("Please, start the bot first");
-        }
-    });
+    simpleDataModificationAction(bot, data, 'dealer', 'dealer', true);
+    simpleDataModificationAction(bot, data, 'not', 'dealer', false);
+    simpleDataModificationAction(bot, data, 'closed', 'open', false);
+    simpleDataModificationAction(bot, data, 'open', 'open', true);
+    simpleDataModificationAction(bot, data, 'standard', 'form', 'standard');
+    simpleDataModificationAction(bot, data, 'pinfu', 'form', 'pinfu');
+    simpleDataModificationAction(bot, data, 'chitoi', 'form', 'chitoi');
+    simpleDataModificationAction(bot, data, 'ron', 'win', 'ron');
+    simpleDataModificationAction(bot, data, 'tsumo', 'win', 'tsumo');
+    bonusAdditionAction(bot, data, 'opon', 'Open Pon');
+    bonusAdditionAction(bot, data, 'cpon', 'Closed Pon');
+    bonusAdditionAction(bot, data, 'opontwd', 'Open Pon TWD');
+    bonusAdditionAction(bot, data, 'cpontwd', 'Closed Pon TWD');
+    bonusAdditionAction(bot, data, 'okan', 'Open Kan');
+    bonusAdditionAction(bot, data, 'ckan', 'Closed Kan');
+    bonusAdditionAction(bot, data, 'okantwd', 'Open Kan TWD');
+    bonusAdditionAction(bot, data, 'ckantwd', 'Closed Kan TWD');
+    bonusAdditionAction(bot, data, 'pairh', 'Pair of Honors');
+    bonusAdditionAction(bot, data, 'otw', 'One Tile Wait');
+    simpleDataModificationAction(bot, data, 'h1', 'han', 1);
+    simpleDataModificationAction(bot, data, 'h2', 'han', 2);
+    simpleDataModificationAction(bot, data, 'h3', 'han', 3);
+    simpleDataModificationAction(bot, data, 'h4', 'han', 4);
+    simpleDataModificationAction(bot, data, 'h5', 'han', 5);
+    simpleDataModificationAction(bot, data, 'h6', 'han', 6);
+    simpleDataModificationAction(bot, data, 'h8', 'han', 8);
+    simpleDataModificationAction(bot, data, 'h11', 'han', 11);
+    simpleDataModificationAction(bot, data, 'h13', 'han', 13);
     bot.action('count', async (ctx) => {
         try {
             let options = await data.filter((record) => record.id === ctx.chat.id)[0];
