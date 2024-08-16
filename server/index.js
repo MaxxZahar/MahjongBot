@@ -29,10 +29,6 @@ bot.telegram.setMyCommands([
         command: 'count',
         description: 'Lets count your points!'
     },
-    {
-        command: 'number',
-        description: 'Generate random number'
-    },
 ]);
 
 bot.command('count', async (ctx) => {
@@ -45,18 +41,6 @@ bot.command('count', async (ctx) => {
     await ctx.reply('Get result', buttons.countButton);
     await ctx.reply('Clear Current Options', buttons.clearButton);
     actions.countActions(bot, data);
-});
-
-bot.command('number', async (ctx) => {
-    ctx.reply('Enter a limit');
-    bot.on(message, async (ctx) => {
-        const limit = Number(ctx.message.text);
-        if (limit) {
-            ctx.reply(Math.floor(Math.random() * limit));
-        } else {
-            ctx.reply('This is an unlucky limit');
-        }
-    });
 });
 
 bot.launch();
